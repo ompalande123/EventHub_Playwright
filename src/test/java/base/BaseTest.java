@@ -21,35 +21,34 @@ public class BaseTest {
     protected Page page;
 
 
-
     @BeforeClass
-    public void setupBrowser(){
+    public void setupBrowser() {
         BrowserFactory.initializeBrowser();
     }
 
     @BeforeMethod
-    public void setupContextPage(){
+    public void setupContextPage() {
 
-        context= browser.newContext();
-        page=context.newPage();
+        context = browser.newContext();
+        page = context.newPage();
     }
 
     @AfterMethod
-    public void tearDown(ITestResult result){
-        if(result.getStatus()==ITestResult.FAILURE){
-            String testName=result.getMethod().getMethodName();
-            if(page !=null && !page.isClosed()){
-                String screenshotPath= ScreenshotUtils.captureScreenshot(page, testName);
-                if(screenshotPath!=null && ExtentManager.getTest()!=null){
-                    try{
+    public void tearDown(ITestResult result) {
+        if (result.getStatus() == ITestResult.FAILURE) {
+            String testName = result.getMethod().getMethodName();
+            if (page != null && !page.isClosed()) {
+                String screenshotPath = ScreenshotUtils.captureScreenshot(page, testName);
+                if (screenshotPath != null && ExtentManager.getTest() != null) {
+                    try {
                         ExtentManager.getTest().addScreenCaptureFromPath(screenshotPath);
-                    }catch (Exception e){
-                        System.out.println("Unable to attach screenshot - "+e.getMessage());
+                    } catch (Exception e) {
+                        System.out.println("Unable to attach screenshot - " + e.getMessage());
                     }
                 }
             }
         }
-        if(context!=null){
+        if (context != null) {
             context.close();
         }
         if (browser != null) browser.close();
@@ -58,7 +57,7 @@ public class BaseTest {
 
 
     @AfterClass
-    public void closeBrowser(){
+    public void closeBrowser() {
         BrowserFactory.closeBrowser();
     }
 
