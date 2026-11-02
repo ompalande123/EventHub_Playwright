@@ -3,10 +3,7 @@ package base;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.*;
 import utils.BrowserFactory;
 import utils.ExtentManager;
 import utils.ScreenshotUtils;
@@ -58,6 +55,13 @@ public class BaseTest {
     @AfterClass
     public void closeBrowser() {
         BrowserFactory.closeBrowser();
+    }
+
+    @AfterSuite
+    public void closePlaywright(){
+        if (playwright!=null){
+            playwright.close();
+        }
     }
 
 }
