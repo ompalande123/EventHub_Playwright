@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+    <Appenders>
+
+        <!-- Console Logs -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%d{dd-MM-yyyy HH:mm:ss.SSS} [%t] %-5level %c{1} - %msg%n"/>
+        </Console>
+
+        <!-- Rolling File Logs -->
+        <RollingFile name="RollingFile"
+                     fileName="test-output/logs/EventHub.log"
+                     filePattern="test-output/logs/EventHub-%d{yyyy-MM-dd}-%i.log.gz">
+
+            <PatternLayout
+                    pattern="%d{dd-MM-yyyy HH:mm:ss.SSS} [%t] %-5level %c{1} - %msg%n"/>
+
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+
+            <DefaultRolloverStrategy max="10"/>
+
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

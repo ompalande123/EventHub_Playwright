@@ -1,14 +1,14 @@
-package pages;
+package components;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
-public class MenubarHomePage {
+public class MenubarHomePageComponent {
 
     private Page page;
 
-    public MenubarHomePage(Page page){
+    public MenubarHomePageComponent(Page page){
         this.page=page;
     }
 
