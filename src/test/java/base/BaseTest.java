@@ -51,8 +51,7 @@ public class BaseTest {
         if (context != null) {
             context.close();
         }
-        if (browser != null) browser.close();
-        if (playwright != null) playwright.close();
+
     }
 
 
