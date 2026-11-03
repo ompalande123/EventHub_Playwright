@@ -8,6 +8,7 @@
 
     <test name="EventHub Tests">
         <classes>
+            <class name="functionalTests.LoginTest"/>
             <class name="functionalTests.EventTest"/>
         </classes>
     </test>

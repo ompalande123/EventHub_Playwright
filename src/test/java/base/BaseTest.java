@@ -2,6 +2,7 @@ package base;
 
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.BrowserFactory;
@@ -58,8 +59,8 @@ public class BaseTest {
     }
 
     @AfterSuite
-    public void closePlaywright(){
-        if (playwright!=null){
+    public void closePlaywright() {
+        if (playwright != null) {
             playwright.close();
         }
     }

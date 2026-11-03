@@ -7,19 +7,15 @@ import components.LoginComponent;
 import utils.ExcelReader;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static utils.ConstantsUtils.TEST_DATA_PATH;
 
 public class LoginTest extends BaseTest {
 
     ExcelReader excelReader;
 
-
-
-    @Test(priority = 1)
+    @Test(priority = 1, groups = {"sanity"})
     public void loginWithValidCreds(){
-        excelReader=new ExcelReader("src/test/resources/testData/eventsTestData.xlsx",
-                "LoginDetails",
-                1);
-
+        excelReader=new ExcelReader(TEST_DATA_PATH, "LoginDetails",1);
         LoginComponent loginComponent=new LoginComponent(page);
         loginComponent.navigateTo();
         loginComponent.enterEmailAddress().fill(excelReader.getCellData("UserName"));
@@ -30,10 +26,7 @@ public class LoginTest extends BaseTest {
 
     @Test(priority = 2)
     public void loginWithInvalidCreds(){
-        excelReader=new ExcelReader("src/test/resources/testData/eventsTestData.xlsx",
-                "LoginDetails",
-                2);
-
+        excelReader=new ExcelReader(TEST_DATA_PATH, "LoginDetails",2);
         LoginComponent loginComponent=new LoginComponent(page);
         loginComponent.navigateTo();
         loginComponent.enterEmailAddress().fill(excelReader.getCellData("UserName"));

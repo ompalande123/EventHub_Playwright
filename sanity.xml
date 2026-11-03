@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="EventHub Test Suite">
+    <test name="Sanity Testing">
+        <groups>
+            <run>
+                <include name="sanity" />
+            </run>
+        </groups>
+        <classes>
+            <class name="functionalTests.EventTest" />
+        </classes>
+    </test>
+</suite>

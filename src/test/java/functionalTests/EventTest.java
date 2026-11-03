@@ -12,6 +12,7 @@ import components.AddNewEventInformationComponent;
 import components.MenubarHomePageComponent;
 import components.LoginComponent;
 import reusables.LoginReusable;
+import utils.ConstantsUtils;
 import utils.ExcelReader;
 import utils.ExtentManager;
 
@@ -21,6 +22,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static utils.ConstantsUtils.TEST_DATA_PATH;
 
 @Listeners(utils.ExtentReportListener.class)
 public class EventTest extends BaseTest {
@@ -28,24 +30,25 @@ public class EventTest extends BaseTest {
     ExcelReader excelReader;
     private static final Logger logger= LogManager.getLogger(EventTest.class);
 
+    @BeforeMethod
+    public void runPrerequisites(){
+        LoginReusable loginReusable=new LoginReusable(page);
+        loginReusable.login();
+
+    }
+
+
     @Test()
     public void addNewEvent(){
-        // to call pre-requisites
-        // prerequisite 1 - read data from Excel
+        // read data from Excel
         try {
-            excelReader = new ExcelReader("src/test/resources/testData/eventsTestData.xlsx",
-                    "AddNewEvent",
-                    1);
+            excelReader=new ExcelReader(TEST_DATA_PATH, "AddNewEvent",1);
         }catch (Exception e)
         {
             logger.error("Sheet name not available - ", e);
         }
         ExtentManager.getTest().info("Excel file read successfully");
         logger.info("Excel file read successfully...");
-        // prerequisite 2 - login to the application
-
-        LoginReusable loginReusable=new LoginReusable(page);
-        loginReusable.login();
         ExtentManager.getTest().info("Login done successfully");
         logger.info("Login with valid credentials done successfully...");
 
@@ -72,17 +75,10 @@ public class EventTest extends BaseTest {
 
     }
 
-    @Test
+    @Test(groups = {"sanity"})
     public void validateAddedEvent(){
-        // to call pre-requisites
-        // prerequisite 1 - read data from Excel
-        excelReader=new ExcelReader("src/test/resources/testData/eventsTestData.xlsx",
-                "FindEvent",
-                4);
-
-        // prerequisite 2 - login to the application
-        LoginReusable loginReusable=new LoginReusable(page);
-        loginReusable.login();
+        // read data from Excel
+        excelReader=new ExcelReader(TEST_DATA_PATH, "FindEvent",1);
 
         // Actual test
         MenubarHomePageComponent menubarOptions=new MenubarHomePageComponent(page);
@@ -91,6 +87,26 @@ public class EventTest extends BaseTest {
         assertThat(searchEventsComponent.allEvents(excelReader.getCellData("EventName"))).isVisible();
     }
 
+
+    @Test
+    public void bookEvent(){
+        //read data from Excel
+        excelReader=new ExcelReader(TEST_DATA_PATH, "BookEvent",1);
+        // Actual test
+        MenubarHomePageComponent menubarOptions=new MenubarHomePageComponent(page);
+        menubarOptions.selectEventFromMenu().click();
+        Locator book = page.getByTestId("event-card")
+                .filter(new Locator.FilterOptions()
+                        .setHasText(excelReader.getCellData("Event Name")))
+                .getByTestId("book-now-btn");
+        book.click();
+        int numberOfTickets= Integer.parseInt(excelReader.getCellData("No. of tickets"));
+        for(int i=1;i<numberOfTickets;i++){
+            page.getByText("+").click();
+        }
+
+
+    }
 
 
 

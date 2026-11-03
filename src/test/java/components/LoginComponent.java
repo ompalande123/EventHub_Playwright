@@ -12,8 +12,6 @@ public class LoginComponent {
         this.page=page;
     }
 
-
-
     public void navigateTo(){
         page.navigate("https://eventhub.rahulshettyacademy.com/login");
     }

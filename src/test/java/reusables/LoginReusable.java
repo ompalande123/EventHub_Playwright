@@ -5,6 +5,7 @@ import components.LoginComponent;
 import utils.ExcelReader;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static utils.ConstantsUtils.TEST_DATA_PATH;
 
 public class LoginReusable {
     Page page;
@@ -14,10 +15,7 @@ public class LoginReusable {
     }
 
     public void login(){
-        excelReader=new ExcelReader("src/test/resources/testData/eventsTestData.xlsx",
-                "LoginDetails",
-                1);
-
+        excelReader=new ExcelReader(TEST_DATA_PATH,"LoginDetails",1);
         LoginComponent loginComponent=new LoginComponent(page);
         loginComponent.navigateTo();
         loginComponent.enterEmailAddress().fill(excelReader.getCellData("UserName"));
