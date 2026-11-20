@@ -12,7 +12,7 @@ public class PracticeMockAPIs {
     public void testRouting(){
 
         Playwright playwright=Playwright.create();
-        Browser browser=playwright.chromium().launch();
+        Browser browser=playwright.firefox().launch();
         BrowserContext context=browser.newContext(new Browser.NewContextOptions()
                 .setRecordVideoDir(Paths.get("videos/")));
         Page page=context.newPage();
@@ -49,6 +49,13 @@ public class PracticeMockAPIs {
 
         context.close();
         browser.close();
+
+
+
+        // Codegen command to record actions::
+        /*
+        mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen https://eventhub.rahulshettyacademy.com/login"
+         */
 
 
     }
